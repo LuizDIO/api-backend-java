@@ -1,6 +1,5 @@
 package com.example.demo;
 
-
 public class Aluno {
     Long id;
     String nome;
@@ -37,7 +36,7 @@ public class Aluno {
         this.id = id;
     }
 
-    public void setNome (String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -45,7 +44,7 @@ public class Aluno {
         this.email = email;
     }
 
-    public void setIdade (Integer idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 
