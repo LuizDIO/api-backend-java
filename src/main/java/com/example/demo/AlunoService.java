@@ -14,23 +14,26 @@ public class AlunoService {
         return alunos;
     }
 
+    private  Long proximoId = 1L;
+
     public AlunoModel cadastrar(AlunoModel aluno) {
+        aluno.setId(proximoId++);
         alunos.add(aluno);
         return aluno;
     }
 
-    public AlunoModel editar(Long id, AlunoModel dadosNovos) {
+    public AlunoModel editar(Long id, AlunoModel alunoModel) {
 
         for (AlunoModel aluno : alunos) {
             if (aluno.getId().equals(id)) {
-                if (aluno.getNome() != null) {
-                    aluno.setNome(dadosNovos.nome);
+                if (alunoModel.getNome() != null) {
+                    aluno.setNome(alunoModel.getNome());
                 }
-                if (aluno.getEmail() != null) {
-                    aluno.setEmail(dadosNovos.email);
+                if (alunoModel.getEmail() != null) {
+                    aluno.setEmail(alunoModel.getEmail());
                 }
-                if (aluno.getIdade() != null) {
-                    aluno.setIdade(dadosNovos.idade);
+                if (alunoModel.getIdade() != null) {
+                    aluno.setIdade(alunoModel.getIdade());
                 }
 
                 return aluno;
