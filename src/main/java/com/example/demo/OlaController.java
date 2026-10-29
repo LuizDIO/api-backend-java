@@ -1,13 +1,10 @@
 package com.example.demo;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/alunos")
@@ -20,13 +17,13 @@ public class OlaController {
     }
 
     @GetMapping
-    public List<Aluno> listarAlunos() {
+    public List<AlunoModel> listarAlunos() {
         return alunoService.listarAlunos();
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> cadastrar(@RequestBody Aluno aluno) {
-        Aluno criado = alunoService.cadastrar(aluno);
+    public ResponseEntity<AlunoModel> cadastrar(@RequestBody AlunoModel aluno) {
+        AlunoModel criado = alunoService.cadastrar(aluno);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -34,10 +31,10 @@ public class OlaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aluno> editar(
+    public ResponseEntity<AlunoModel> editar(
             @PathVariable Long id,
-            @RequestBody Aluno dadosNovos) {
-        Aluno atualizado = alunoService.editar(id, dadosNovos);
+            @RequestBody AlunoModel dadosNovos) {
+        AlunoModel atualizado = alunoService.editar(id, dadosNovos);
 
         if (atualizado == null) {
             return ResponseEntity.notFound().build();

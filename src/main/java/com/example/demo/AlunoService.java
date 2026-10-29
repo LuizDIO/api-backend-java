@@ -8,24 +8,30 @@ import java.util.List;
 @Service
 public class AlunoService {
 
-    private final List<Aluno> alunos = new ArrayList<>();
+    private final List<AlunoModel> alunos = new ArrayList<>();
 
-    public List<Aluno> listarAlunos() {
+    public List<AlunoModel> listarAlunos() {
         return alunos;
     }
 
-    public Aluno cadastrar(Aluno aluno) {
+    public AlunoModel cadastrar(AlunoModel aluno) {
         alunos.add(aluno);
         return aluno;
     }
 
-    public Aluno editar(Long id, Aluno dadosNovos) {
+    public AlunoModel editar(Long id, AlunoModel dadosNovos) {
 
-        for (Aluno aluno : alunos) {
+        for (AlunoModel aluno : alunos) {
             if (aluno.getId().equals(id)) {
-                aluno.setNome(dadosNovos.getNome());
-                aluno.setEmail(dadosNovos.getEmail());
-                aluno.setIdade(dadosNovos.getIdade());
+                if (aluno.getNome() != null) {
+                    aluno.setNome(dadosNovos.nome);
+                }
+                if (aluno.getEmail() != null) {
+                    aluno.setEmail(dadosNovos.email);
+                }
+                if (aluno.getIdade() != null) {
+                    aluno.setIdade(dadosNovos.idade);
+                }
 
                 return aluno;
             }
@@ -33,7 +39,7 @@ public class AlunoService {
         return null;
     }
 
-    public boolean excluir (Long id) {
+    public boolean excluir(Long id) {
         return alunos.removeIf(aluno -> aluno.getId().equals(id));
     }
 }
