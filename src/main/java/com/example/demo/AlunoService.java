@@ -8,18 +8,20 @@ import java.util.List;
 @Service
 public class AlunoService {
 
-    private final List<AlunoModel> alunos = new ArrayList<>();
+    private final AlunoRepository alunoRepository;
+
+    public AlunoService(AlunoRepository alunoRepository) {
+        this.alunoRepository = alunoRepository;
+    }
 
     public List<AlunoModel> listarAlunos() {
-        return alunos;
+        return alunoRepository.findAll();
     }
 
     private  Long proximoId = 1L;
 
     public AlunoModel cadastrar(AlunoModel aluno) {
-        aluno.setId(proximoId++);
-        alunos.add(aluno);
-        return aluno;
+        return alunoRepository.save(aluno);
     }
 
     public AlunoModel editar(Long id, AlunoModel alunoModel) {

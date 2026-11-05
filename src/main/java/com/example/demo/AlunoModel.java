@@ -1,6 +1,12 @@
 package com.example.demo;
 
+import jakarta.persistence.*;
+
+@Entity
 public class AlunoModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String nome;
     String email;
