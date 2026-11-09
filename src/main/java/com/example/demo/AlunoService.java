@@ -1,8 +1,8 @@
 package com.example.demo;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,33 +18,45 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
-    private  Long proximoId = 1L;
 
     public AlunoModel cadastrar(AlunoModel aluno) {
+        if (aluno.getIdade() == null || aluno.getIdade() <= 0) {
+            throw new IllegalArgumentException("Idade Invalida");
+        }
         return alunoRepository.save(aluno);
     }
 
+
+    @Transactional
     public AlunoModel editar(Long id, AlunoModel alunoModel) {
 
-        for (AlunoModel aluno : alunos) {
-            if (aluno.getId().equals(id)) {
-                if (alunoModel.getNome() != null) {
-                    aluno.setNome(alunoModel.getNome());
-                }
-                if (alunoModel.getEmail() != null) {
-                    aluno.setEmail(alunoModel.getEmail());
-                }
-                if (alunoModel.getIdade() != null) {
-                    aluno.setIdade(alunoModel.getIdade());
-                }
-
-                return aluno;
+        AlunoModel aluno = alunoRepository.findById(id).orElse(null);
+            if (aluno == null ) {
+                return null;
             }
+            if (alunoModel.getNome() != null ) {
+                aluno.setNome(alunoModel.getNome());
+            }
+            if (alunoModel.getEmail() != null) {
+                aluno.setEmail(alunoModel.getEmail());
+            }
+            if (alunoModel.getIdade() != null) {
+                aluno.setIdade((alunoModel.getIdade()));
+            }
+
+            return aluno;
+
         }
-        return null;
-    }
+
 
     public boolean excluir(Long id) {
-        return alunos.removeIf(aluno -> aluno.getId().equals(id));
+        boolean existe = alunoRepository.existsById(id);
+
+        if (!existe) {
+            return false;
+        }
+
+        alunoRepository.deleteById(id);
+        return true;
     }
 }
