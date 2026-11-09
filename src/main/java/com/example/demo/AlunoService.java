@@ -2,11 +2,15 @@ package com.example.demo;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 @Service
 public class AlunoService {
+
+    //Registro de log com erros
+    private static final Logger log = LoggerFactory.getLogger(AlunoService.class);
 
     private final AlunoRepository alunoRepository;
 
@@ -19,11 +23,16 @@ public class AlunoService {
     }
 
 
-    public AlunoModel cadastrar(AlunoModel aluno) {
+    public List<AlunoModel> cadastrar(List<AlunoModel> alunos) {
+        for (AlunoModel aluno : alunos) {
         if (aluno.getIdade() == null || aluno.getIdade() <= 0) {
-            throw new IllegalArgumentException("Idade Invalida");
+            log.error("Idade invalida para o aluno: {}", aluno.getId());
+
+            throw new BusinessException(BusinessException.Erro.IDADE_INVALIDA);
+
         }
-        return alunoRepository.save(aluno);
+        }
+        return alunoRepository.saveAll(alunos);
     }
 
 

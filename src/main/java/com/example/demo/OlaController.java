@@ -22,12 +22,14 @@ public class OlaController {
     }
 
     @PostMapping
-    public ResponseEntity<AlunoModel> cadastrar(@RequestBody AlunoModel aluno) {
-        AlunoModel criado = alunoService.cadastrar(aluno);
+    public ResponseEntity<List<AlunoModel>> cadastrar(@RequestBody List<AlunoModel> aluno) {
+
+        List<AlunoModel> criado = alunoService.cadastrar(aluno);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(criado);
+
     }
 
     @PutMapping("/{id}")
